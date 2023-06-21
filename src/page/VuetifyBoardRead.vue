@@ -67,7 +67,7 @@ export default {
     ),
     async onDelete () {
       await this.requestDeleteBoardToSpring(this.boardId)
-      await this.$router.push({ name: 'BoardListPage' })
+      await this.$router.push({ name: 'VuetifyBoardList' })
     }
   },
   created () {

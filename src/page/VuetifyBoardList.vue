@@ -7,14 +7,21 @@
       </router-link>
     </div>
     <v-data-table
-      v-model:items-per-page="itemsPerPage"
+      :items-per-page="perPage"
       :headers="headerTitle"
-      :items="boards"
+      :items="pagedItems"
+      :pagination.sync="pagination"
       item-value="name"
-      class="elevation-1"
+      class="elevation-3"
       @click:row="readRow"
       item-key="boardId">
     </v-data-table>
+    <v-pagination
+      v-model="pagination.page"
+      :length="Math.ceil(boards.length / perPage)"
+      color="primary"
+      @input="updateItems"
+    ></v-pagination>
   </v-container>
 </template>
 
@@ -28,6 +35,11 @@ export default {
     components: { RouterLink },
     computed: {
         ...mapState(boardModule, ['boards']),
+        pagedItems() {
+            const startIndex = (this.pagination.page - 1) * this.perPage;
+            const endIndex = startIndex + this.perPage;
+            return this.boards.slice(startIndex, endIndex);
+        },
     },
     mounted () {
         this.requestBoardListToSpring()
@@ -48,7 +60,6 @@ export default {
     },
     data () {
         return {
-            itemsPerPage: 5,
             headerTitle: [
                 {
                     title: 'No',
@@ -60,6 +71,10 @@ export default {
                 { title: '작성자', align: 'end', key: 'writer' },
                 { title: '작성일자', align: 'end', key: 'createDate' },
             ],
+            perPage: 5,
+            pagination: {
+                page: 1,
+            },
         }
     }
 }

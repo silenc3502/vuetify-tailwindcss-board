@@ -15,6 +15,13 @@ export type BoardActions = {
         writer: string;
     }): Promise<AxiosResponse>;
     requestBoardToSpring(context: ActionContext<BoardState, any>, boardId: number): void;
+    requestDeleteBoardToSpring(context: ActionContext<BoardState, any>, boardId: number): Promise<void>;
+    requestBoardModifyToSpring(context: ActionContext<BoardState, any>, payload: {
+        title: string;
+        content: string;
+        boardId: number;
+        writer: string;
+    }): Promise<void>;
 };
 
 const actions: BoardActions = {
@@ -47,6 +54,28 @@ const actions: BoardActions = {
             context.commit(REQUEST_BOARD_TO_SPRING, res.data);
         } catch (error) {
             console.error(error);
+        }
+    },
+    async requestDeleteBoardToSpring(context: ActionContext<BoardState, any>, boardId: number): Promise<void> {
+        try {
+            await axiosInst.springAxiosInst.delete(`/jpa-board/${boardId}`);
+            alert('삭제 성공!');
+        } catch (error) {
+            alert('문제 발생!');
+            throw error;
+        }
+    },
+    async requestBoardModifyToSpring(context: ActionContext<BoardState, any>, payload: { title: string, content: string, boardId: number, writer: string }): Promise<void> {
+        const { title, content, boardId, writer } = payload;
+
+        console.log("title: " + title + ", content: " + content + ", writer: " + writer + ", boardId: " + boardId);
+
+        try {
+            await axiosInst.springAxiosInst.put(`/jpa-board/${boardId}`, { title, content, writer });
+            alert("수정 성공!");
+        } catch (error) {
+            alert('문제 발생!');
+            throw error;
         }
     },
 };
