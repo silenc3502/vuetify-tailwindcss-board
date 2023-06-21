@@ -6,20 +6,33 @@ import App from "./App.vue";
 
 import { loadFonts } from "./plugins/webfontloader";
 
-import * as components from 'vuetify/components';
+import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives';
-import { createVuetify } from "vuetify";
+import * as labsComponents from 'vuetify/labs/components'
+import { createVuetify, VuetifyOptions } from "vuetify";
+
+import boardModule from './store/index'
+import router from './router'
+
+import '@mdi/font/css/materialdesignicons.css'
+import 'vuetify/dist/vuetify.min.css'
 
 const vuetifyTailwindBoardMount = (el: string | Element) => {
 
-    loadFonts()
-    
-    const vuetify = createVuetify({
-        components, directives
-    })
+    loadFonts().then(() => { // Promise가 처리될 때까지 기다립니다.
+        const vuetify = createVuetify({
+            components: {
+                ...components,
+                ...labsComponents,
+            },
+            directives: {
+                ...directives,
+            },
+        });
 
-    const app = createApp(App).use(vuetify)
-    app.mount(el)
+        const app = createApp(App).use(vuetify).use(boardModule).use(router);
+        app.mount(el);
+    });
 };
 
 const root = document.querySelector('#vuetify-tailwindcss-board')
