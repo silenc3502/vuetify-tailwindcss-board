@@ -14,6 +14,7 @@ export type BoardActions = {
         content: string;
         writer: string;
     }): Promise<AxiosResponse>;
+    requestBoardToSpring(context: ActionContext<BoardState, any>, boardId: number): void;
 };
 
 const actions: BoardActions = {
@@ -40,16 +41,14 @@ const actions: BoardActions = {
             throw error;
         }
     },
-    // requestBoardToSpring(context: ActionContext<BoardState, any>, boardId: number) {
-    //     axiosInst.springAxiosInst
-    //         .get(`/jpa-board/${boardId}`)
-    //         .then((res) => {
-    //             context.commit(REQUEST_BOARD_TO_SPRING, res.data);
-    //         })
-    //         .catch((error) => {
-    //             console.error(error);
-    //         });
-    // },
+    async requestBoardToSpring(context: ActionContext<BoardState, any>, boardId: number): Promise<void> {
+        try {
+            const res: AxiosResponse<Board> = await axiosInst.springAxiosInst.get(`/jpa-board/${boardId}`);
+            context.commit(REQUEST_BOARD_TO_SPRING, res.data);
+        } catch (error) {
+            console.error(error);
+        }
+    },
 };
 
 export default actions;

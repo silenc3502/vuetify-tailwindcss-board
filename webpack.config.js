@@ -15,7 +15,7 @@ module.exports = (_, argv) => ({
   target: 'web',
   entry: path.resolve(__dirname, './src/index'),
   output: {
-    publicPath: "auto",
+    publicPath: "/",
   },
   resolve: {
     extensions: [".tsx", ".ts", ".vue", ".jsx", ".js", ".json"],
@@ -90,6 +90,7 @@ module.exports = (_, argv) => ({
     static: {
       directory: path.join(__dirname),
     },
+    historyApiFallback: true,
     compress: true,
     port: 3012,
     hot: true,

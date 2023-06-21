@@ -1,10 +1,9 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 
-import BoardRegisterPage from '../domain/board/page/BoardRegisterPage.vue';
-import BoardReadPage from '../domain/board/page/BoardReadPage.vue';
-import BoardModifyPage from '../domain/board/page/BoardModifyPage.vue';
 import VuetifyBoardList from "../page/VuetifyBoardList.vue";
 import VuetifyBoardRegister from "../page/VuetifyBoardRegister.vue";
+import VuetifyBoardRead from "../page/VuetifyBoardRead.vue";
+import VuetifyBoardModify from "../page/VuetifyBoardModify.vue";
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -17,18 +16,18 @@ const routes: Array<RouteRecordRaw> = [
         name: 'VuetifyBoardRegister',
         component: VuetifyBoardRegister,
     },
-    // {
-    //     path: '/vuetify-board-read/:boardId',
-    //     name: 'VuetifyBoardRead',
-    //     components: { default: VuetifyBoardRead },
-    //     props: { default: true },
-    // },
-    // {
-    //     path: '/vuetify-board-modify/:boardId',
-    //     name: 'VuetifyBoardModify',
-    //     components: { default: VuetifyBoardModify },
-    //     props: { default: true },
-    // },
+    {
+        path: '/vuetify-board-read/:boardId',
+        name: 'VuetifyBoardRead',
+        components: { default: VuetifyBoardRead },
+        props: { default: true },
+    },
+    {
+        path: '/vuetify-board-modify/:boardId',
+        name: 'VuetifyBoardModify',
+        components: { default: VuetifyBoardModify },
+        props: { default: true },
+    },
 ];
 
 const router = createRouter({

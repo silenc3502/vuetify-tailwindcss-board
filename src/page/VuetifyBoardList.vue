@@ -11,7 +11,9 @@
       :headers="headerTitle"
       :items="boards"
       item-value="name"
-      class="elevation-1">
+      class="elevation-1"
+      @click:row="readRow"
+      item-key="boardId">
     </v-data-table>
   </v-container>
 </template>
@@ -33,7 +35,16 @@ export default {
     methods: {
         ...mapActions(
             boardModule, ['requestBoardListToSpring']
-        )
+        ),
+        readRow (e, { item }) {
+            const selectedRowBoardId = item.selectable.boardId
+            alert('게시물 읽기: ' + JSON.stringify(item.selectable.boardId))
+
+            this.$router.push({
+                name: 'VuetifyBoardRead',
+                params: { boardId: selectedRowBoardId.toString() }
+            })
+        }
     },
     data () {
         return {

@@ -61,7 +61,7 @@ export default {
       const board = await this.requestCreateBoardToSpring(payload);
       console.log('board: ', board)
       await this.$router.push({
-        name: 'BoardReadPage',
+        name: 'VuetifyBoardRead',
         params: { boardId: board.boardId.toString() }
       });
     }
