@@ -7,7 +7,7 @@
       </router-link>
     </div>
     <v-data-table
-      :items-per-page="perPage"
+      v-model:items-per-page="perPage"
       :headers="headerTitle"
       :items="pagedItems"
       :pagination.sync="pagination"
@@ -64,7 +64,7 @@ export default {
                 {
                     title: 'No',
                     align: 'start',
-                    sortable: false,
+                    sortable: true,
                     key: 'boardId',
                 },
                 { title: '제목', align: 'end', key: 'title' },
